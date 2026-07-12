@@ -473,7 +473,7 @@ Este proyecto se distribuye bajo la licencia **MIT**, permitiendo su uso, modifi
 
 # 👨‍💻 Desarrollador
 
-**Isai Reyes
+**Isai Reyes - FullStack Developer**
 
 Desarrollado como el backend de un **Sistema Médico** utilizando **Java**, **Spring Boot**, **Spring Security**, **Spring Data JPA**, **Hibernate** y **MySQL**, implementando una API REST escalable, segura y preparada para integrarse con aplicaciones web y móviles.
 
