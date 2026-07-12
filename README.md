@@ -199,7 +199,7 @@ El proyecto implementa una arquitectura multicapa siguiendo las mejores práctic
 # 📂 Estructura del Proyecto
 
 ```text
-SistemaMedicoAPI/
+Backend-SistemaMedico/
 │
 ├── src/
 │   ├── main/
@@ -304,13 +304,13 @@ SistemaMedicoAPI/
 ## 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/usuario/sistema-medico-api.git
+git clone https://github.com/isairey/Backend-SistemaMedico.git
 ```
 
 Entrar al proyecto
 
 ```bash
-cd sistema-medico-api
+cd Backend-SistemaMedico
 ```
 
 ---
@@ -471,7 +471,9 @@ Este proyecto se distribuye bajo la licencia **MIT**, permitiendo su uso, modifi
 
 ---
 
-# 👨‍💻 Autor
+# 👨‍💻 Desarrollador
+
+**Isai Reyes
 
 Desarrollado como el backend de un **Sistema Médico** utilizando **Java**, **Spring Boot**, **Spring Security**, **Spring Data JPA**, **Hibernate** y **MySQL**, implementando una API REST escalable, segura y preparada para integrarse con aplicaciones web y móviles.
 
