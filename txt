@@ -1,0 +1,22 @@
+# 👾 root@github:~#
+
+```bash
+┌──(root㉿github)-[~]
+└─$ whoami
+
+DevSnow
+
+└─$ cat perfil.txt
+
+Alias      : DevSnow
+Rol        : Hacker Ético
+Estado     : Activo
+Objetivo   : Aprender • Crear • Proteger
+```
+
+- 💻 Desarrollando herramientas y proyectos.
+- 🛡️ Aprendiendo Ciberseguridad.
+- 🐧 Amante de Linux.
+- ⚙️ Siempre explorando nuevas tecnologías.
+
+> `Hackea el código, no a las personas.`
