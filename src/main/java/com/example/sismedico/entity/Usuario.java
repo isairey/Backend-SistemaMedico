@@ -1,13 +1,14 @@
 package com.example.sismedico.entity;
 
 import com.example.sismedico.enums.Rol;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "usuarios")
@@ -53,18 +54,43 @@ public class Usuario {
     private Rol rol;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean activo = true;
 
-    @Column(nullable = false)
+    // Relación 1:1 con Paciente
+    @OneToOne(mappedBy = "usuario",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Paciente paciente;
+
+    // Relación 1:1 con Medico
+    @OneToOne(mappedBy = "usuario",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Medico medico;
+
+    // Relación 1:N con Notificaciones
+    @Builder.Default
+    @OneToMany(
+            mappedBy = "usuario",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<Notificacion> notificaciones = new ArrayList<>();
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime fechaRegistro;
 
     @PrePersist
     public void prePersist() {
+
         fechaRegistro = LocalDateTime.now();
 
         if (activo == null) {
             activo = true;
         }
+
     }
 
 }
