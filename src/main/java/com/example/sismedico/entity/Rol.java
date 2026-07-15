@@ -4,6 +4,9 @@ import com.example.sismedico.enums.RolNombre;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "roles")
 @Getter
@@ -23,5 +26,12 @@ public class Rol {
 
     @Column(length = 255)
     private String descripcion;
+
+    @Builder.Default
+    @OneToMany(
+            mappedBy = "rol",
+            fetch = FetchType.LAZY
+    )
+    private List<Usuario> usuarios = new ArrayList<>();
 
 }
