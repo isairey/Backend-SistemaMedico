@@ -1,10 +1,12 @@
 package com.example.sismedico.entity;
 
+import com.example.sismedico.enums.Genero;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +52,14 @@ public class Usuario {
     private String direccion;
 
     @Column(length = 255)
-    private String foto;
+    private String fotoPerfil;
 
-    // Relación con Rol
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Genero genero;
+
+    private LocalDate fechaNacimiento;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rol_id", nullable = false)
     private Rol rol;
@@ -100,6 +107,8 @@ public class Usuario {
     @Column(nullable = false, updatable = false)
     private LocalDateTime fechaRegistro;
 
+    private LocalDateTime ultimaActualizacion;
+
     @PrePersist
     public void prePersist() {
 
@@ -108,6 +117,7 @@ public class Usuario {
         }
 
         fechaRegistro = LocalDateTime.now();
+        ultimaActualizacion = LocalDateTime.now();
 
         if (activo == null) {
             activo = true;
@@ -117,6 +127,11 @@ public class Usuario {
             emailVerificado = false;
         }
 
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        ultimaActualizacion = LocalDateTime.now();
     }
 
 }
