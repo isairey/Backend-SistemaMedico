@@ -28,7 +28,7 @@ public class OpenApiConfig {
         Contact contact = new Contact();
         contact.setName("Equipo SISMEDICO");
         contact.setEmail("soporte@sismedico.com");
-        contact.setUrl("https://github.com/tuusuario/sismedico");
+        contact.setUrl("https://github.com/isairey/Backend-SistemaMedico");
 
         License license = new License()
                 .name("MIT License")
@@ -62,7 +62,7 @@ public class OpenApiConfig {
                 .externalDocs(
                         new ExternalDocumentation()
                                 .description("Documentación del Proyecto")
-                                .url("https://github.com/tuusuario/sismedico")
+                                .url("https://github.com/isairey/Backend-SistemaMedico")
                 );
 
     }
