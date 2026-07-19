@@ -7,6 +7,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "citas")
@@ -21,39 +22,65 @@ public class Cita {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Paciente que agenda la cita
+    @Column(nullable = false, unique = true, updatable = false, length = 36)
+    private String uuid;
+
+    /**
+     * Paciente
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente;
 
-    // Médico que atenderá
+    /**
+     * Médico
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medico_id", nullable = false)
     private Medico medico;
 
-    // Fecha de la consulta
+    /**
+     * Especialidad
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "especialidad_id", nullable = false)
+    private Especialidad especialidad;
+
+    /**
+     * Fecha de la consulta
+     */
     @Column(nullable = false)
     private LocalDate fecha;
 
-    // Hora de la consulta
+    /**
+     * Hora de la consulta
+     */
     @Column(nullable = false)
     private LocalTime hora;
 
-    // Motivo de la consulta
-    @Column(length = 500)
+    /**
+     * Motivo de la consulta
+     */
+    @Column(nullable = false, length = 500)
     private String motivo;
 
-    // Observaciones
+    /**
+     * Observaciones
+     */
     @Column(length = 1000)
     private String observaciones;
 
-    // Estado de la cita
+    /**
+     * Estado
+     */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
     private EstadoCita estado = EstadoCita.PENDIENTE;
 
-    // Diagnóstico generado durante la cita
+    /**
+     * Diagnóstico
+     */
     @OneToOne(
             mappedBy = "cita",
             cascade = CascadeType.ALL,
@@ -62,18 +89,37 @@ public class Cita {
     )
     private Diagnostico diagnostico;
 
-    // Fecha de registro
+    /**
+     * Fecha de registro
+     */
     @Column(nullable = false, updatable = false)
     private LocalDateTime fechaRegistro;
+
+    /**
+     * Última actualización
+     */
+    private LocalDateTime fechaActualizacion;
 
     @PrePersist
     public void prePersist() {
 
-        fechaRegistro = LocalDateTime.now();
+        if (uuid == null) {
+            uuid = UUID.randomUUID().toString();
+        }
 
         if (estado == null) {
             estado = EstadoCita.PENDIENTE;
         }
+
+        fechaRegistro = LocalDateTime.now();
+        fechaActualizacion = LocalDateTime.now();
+
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+
+        fechaActualizacion = LocalDateTime.now();
 
     }
 
