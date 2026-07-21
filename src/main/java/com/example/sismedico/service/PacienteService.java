@@ -198,4 +198,46 @@ public class PacienteService {
 
     }
 
-    
+        /**
+     * Listar pacientes activos
+     */
+    @Transactional(readOnly = true)
+    public List<Paciente> listarActivos() {
+
+        return pacienteRepository.findAll()
+                .stream()
+                .filter(Paciente::getActivo)
+                .toList();
+
+    }
+
+    /**
+     * Verificar si existe un paciente
+     */
+    @Transactional(readOnly = true)
+    public boolean existePaciente(Long id) {
+
+        return pacienteRepository.existsById(id);
+
+    }
+
+    /**
+     * Contar pacientes registrados
+     */
+    @Transactional(readOnly = true)
+    public long contarPacientes() {
+
+        return pacienteRepository.count();
+
+    }
+
+    /**
+     * Guardar paciente
+     */
+    private Paciente guardar(Paciente paciente) {
+
+        return pacienteRepository.save(paciente);
+
+    }
+
+}
