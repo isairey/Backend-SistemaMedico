@@ -94,4 +94,205 @@ public class UsuarioService {
     }
 
 
+        /**
+     * Actualizar usuario
+     */
+    public Usuario actualizarUsuario(
+            Long id,
+            UsuarioRequest request) {
+
+
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Usuario no encontrado."
+                        ));
+
+
+
+        if (!usuario.getCorreo()
+                .equalsIgnoreCase(request.getCorreo())
+                &&
+                usuarioRepository.existsByCorreo(
+                        request.getCorreo())) {
+
+            throw new RuntimeException(
+                    "El correo ya está registrado."
+            );
+
+        }
+
+
+
+        Rol rol = rolRepository.findById(
+                        request.getRolId())
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Rol no encontrado."
+                        ));
+
+
+
+
+        usuario.setNombre(
+                request.getNombre()
+        );
+
+        usuario.setApellido(
+                request.getApellido()
+        );
+
+
+        usuario.setCorreo(
+                request.getCorreo()
+        );
+
+
+        if (request.getPassword() != null &&
+                !request.getPassword().isBlank()) {
+
+            usuario.setPassword(
+                    passwordEncoder.encode(
+                            request.getPassword()
+                    )
+            );
+
+        }
+
+
+
+        usuario.setTelefono(
+                request.getTelefono()
+        );
+
+
+        usuario.setDireccion(
+                request.getDireccion()
+        );
+
+
+        usuario.setFoto(
+                request.getFoto()
+        );
+
+
+        usuario.setGenero(
+                request.getGenero()
+        );
+
+
+        usuario.setFechaNacimiento(
+                request.getFechaNacimiento()
+        );
+
+
+        usuario.setRol(
+                rol
+        );
+
+
+        usuario.setActivo(
+                request.getActivo()
+        );
+
+
+        usuario.setEmailVerificado(
+                request.getEmailVerificado()
+        );
+
+
+        usuario.setTokenFirebase(
+                request.getTokenFirebase()
+        );
+
+
+
+        return usuarioRepository.save(usuario);
+
+    }
+
+
+
+    /**
+     * Activar usuario
+     */
+    public Usuario activarUsuario(Long id) {
+
+
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Usuario no encontrado."
+                        ));
+
+
+
+        usuario.setActivo(true);
+
+
+        return usuarioRepository.save(usuario);
+
+    }
+
+
+
+
+    /**
+     * Desactivar usuario
+     */
+    public Usuario desactivarUsuario(Long id) {
+
+
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Usuario no encontrado."
+                        ));
+
+
+
+        usuario.setActivo(false);
+
+
+        return usuarioRepository.save(usuario);
+
+    }
+
+
+
+
+    /**
+     * Cambiar rol de usuario
+     */
+    public Usuario cambiarRol(
+            Long usuarioId,
+            Long rolId) {
+
+
+        Usuario usuario =
+                usuarioRepository.findById(usuarioId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Usuario no encontrado."
+                                ));
+
+
+
+        Rol rol =
+                rolRepository.findById(rolId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Rol no encontrado."
+                                ));
+
+
+
+        usuario.setRol(rol);
+
+
+
+        return usuarioRepository.save(usuario);
+
+    }
+
     
