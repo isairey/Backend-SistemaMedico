@@ -25,61 +25,80 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Column(nullable = false, unique = true, updatable = false, length = 36)
     private String uuid;
+
 
     @NotBlank(message = "El nombre es obligatorio")
     @Column(nullable = false, length = 100)
     private String nombre;
 
+
     @NotBlank(message = "El apellido es obligatorio")
     @Column(nullable = false, length = 100)
     private String apellido;
+
 
     @Email(message = "Correo inválido")
     @NotBlank(message = "El correo es obligatorio")
     @Column(nullable = false, unique = true, length = 150)
     private String correo;
 
+
     @NotBlank(message = "La contraseña es obligatoria")
     @Column(nullable = false)
     private String password;
 
+
     @Column(length = 20)
     private String telefono;
+
 
     @Column(length = 255)
     private String direccion;
 
+
     @Column(length = 255)
-    private String fotoPerfil;
+    private String foto;
+
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Genero genero;
 
+
+    @Column(nullable = false)
     private LocalDate fechaNacimiento;
 
+
+    // Rol del usuario
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rol_id", nullable = false)
     private Rol rol;
+
 
     @Column(nullable = false)
     @Builder.Default
     private Boolean activo = true;
 
+
     @Column(nullable = false)
     @Builder.Default
     private Boolean emailVerificado = false;
 
+
     @Column(length = 255)
     private String tokenFirebase;
 
+
     private LocalDateTime ultimoAcceso;
+
 
     // ==========================
     // Relaciones
     // ==========================
+
 
     @OneToOne(
             mappedBy = "usuario",
@@ -88,12 +107,16 @@ public class Usuario {
     )
     private Paciente paciente;
 
+
+
     @OneToOne(
             mappedBy = "usuario",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private Medico medico;
+
+
 
     @Builder.Default
     @OneToMany(
@@ -104,24 +127,33 @@ public class Usuario {
     )
     private List<Notificacion> notificaciones = new ArrayList<>();
 
+
+
     @Column(nullable = false, updatable = false)
     private LocalDateTime fechaRegistro;
 
+
     private LocalDateTime ultimaActualizacion;
+
+
 
     @PrePersist
     public void prePersist() {
+
 
         if (uuid == null) {
             uuid = UUID.randomUUID().toString();
         }
 
+
         fechaRegistro = LocalDateTime.now();
         ultimaActualizacion = LocalDateTime.now();
+
 
         if (activo == null) {
             activo = true;
         }
+
 
         if (emailVerificado == null) {
             emailVerificado = false;
@@ -129,9 +161,13 @@ public class Usuario {
 
     }
 
+
+
     @PreUpdate
     public void preUpdate() {
+
         ultimaActualizacion = LocalDateTime.now();
+
     }
 
 }
