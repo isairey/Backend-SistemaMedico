@@ -16,23 +16,44 @@ public class MedicoRequest {
     @NotNull(message = "La especialidad es obligatoria")
     private Long especialidadId;
 
-    @NotBlank(message = "El número de cédula profesional es obligatorio")
-    @Size(max = 30, message = "La cédula no puede superar los 30 caracteres")
+    @NotBlank(message = "La cédula profesional es obligatoria")
+    @Size(
+            max = 20,
+            message = "La cédula profesional no puede exceder los 20 caracteres"
+    )
     private String cedulaProfesional;
 
-    @NotBlank(message = "El consultorio es obligatorio")
-    @Size(max = 100)
-    private String consultorio;
+    @Size(
+            max = 1000,
+            message = "La biografía no puede exceder los 1000 caracteres"
+    )
+    private String biografia;
 
-    @DecimalMin(value = "0.0", inclusive = true, message = "El costo debe ser mayor o igual a 0")
+    @NotNull(message = "La experiencia es obligatoria")
+    @Min(
+            value = 0,
+            message = "La experiencia no puede ser negativa"
+    )
+    @Max(
+            value = 60,
+            message = "La experiencia no puede ser mayor a 60 años"
+    )
+    private Integer experiencia;
+
+    @NotNull(message = "El costo de consulta es obligatorio")
+    @DecimalMin(
+            value = "0.0",
+            inclusive = true,
+            message = "El costo debe ser mayor o igual a 0"
+    )
     private Double costoConsulta;
 
-    @Min(value = 10, message = "La duración mínima es de 10 minutos")
-    @Max(value = 180, message = "La duración máxima es de 180 minutos")
-    private Integer duracionConsulta;
-
-    @Size(max = 1000, message = "La biografía no puede exceder los 1000 caracteres")
-    private String biografia;
+    @NotBlank(message = "El consultorio es obligatorio")
+    @Size(
+            max = 100,
+            message = "El consultorio no puede exceder los 100 caracteres"
+    )
+    private String consultorio;
 
     @Builder.Default
     private Boolean activo = true;
