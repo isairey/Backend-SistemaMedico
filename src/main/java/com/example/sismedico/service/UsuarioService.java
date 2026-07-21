@@ -295,4 +295,91 @@ public class UsuarioService {
 
     }
 
-    
+        /**
+     * Buscar usuario por correo
+     */
+    @Transactional(readOnly = true)
+    public Usuario buscarPorCorreo(String correo) {
+
+
+        return usuarioRepository.findByCorreo(correo)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Usuario no encontrado."
+                        ));
+
+    }
+
+
+
+    /**
+     * Verificar si existe usuario
+     */
+    @Transactional(readOnly = true)
+    public boolean existeUsuario(Long id) {
+
+
+        return usuarioRepository.existsById(id);
+
+    }
+
+
+
+    /**
+     * Verificar si existe correo
+     */
+    @Transactional(readOnly = true)
+    public boolean existeCorreo(String correo) {
+
+
+        return usuarioRepository.existsByCorreo(correo);
+
+    }
+
+
+
+    /**
+     * Eliminar usuario
+     */
+    public void eliminarUsuario(Long id) {
+
+
+        Usuario usuario =
+                usuarioRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Usuario no encontrado."
+                                ));
+
+
+
+        usuarioRepository.delete(usuario);
+
+    }
+
+
+
+    /**
+     * Contar usuarios registrados
+     */
+    @Transactional(readOnly = true)
+    public long contarUsuarios() {
+
+
+        return usuarioRepository.count();
+
+    }
+
+
+
+    /**
+     * Guardar usuario
+     */
+    private Usuario guardar(Usuario usuario) {
+
+
+        return usuarioRepository.save(usuario);
+
+    }
+
+}
